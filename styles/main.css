@@ -1,0 +1,13 @@
+body {
+   background: url(../images/to-do-app-hero.jpg) center / cover;
+   height: 60vh;
+   justify-content: center;
+   text-align: center;
+   color: #ffffff;
+ }
+
+ @media screen and (max-width: 1024px) {
+   header.mdl-layout__header {
+     display: flex;
+   }
+ }
