@@ -1,44 +1,62 @@
 function onReady() {
+   let id = toDos.length || 0;
+   const toDos = [];
    const addToDoForm = document.getElementById('addToDoForm');
    const newToDoText = document.getElementById('newToDoText');
-   const toDoList = document.getElementById('toDoList');
 
-   addToDoForm.addEventListener('submit', event => {
-    event.preventDefault();
+    function createNewToDo() {
 
-    let title = newToDoText.value;
+      toDos.push({
+        title: newToDoText.value,
+        complete: false,
+        id: ++id
+      });
+    }
 
-    let newLi = document.createElement('li');
+    function deleteToDo(id) {
+      return toDos.filter(toDO => toDo.id !== id);
+    }
 
-    let checkbox = document.createElement('input');
+    function renderTheUI() {
+      const toDoList = document.getElementById('toDoList');
+      toDoList.textContent = '';
 
-    let deleteBtn = document.createElement('button');
+      toDos.forEach(function(toDo) {
+        const newLi = document.createElement('li');
 
-    checkbox.type = "checkbox";
+        const checkbox = document.createElement('input');
+        checkbox.type = "checkbox";
+        checkbox.checked = toDo.complete;
 
-    newLi.textContent = title;
+        const deleteBtn = document.createElement('button');
+        deleteBtn.innerHTML = '<span>Delete</span>';
 
-    newLi.appendChild(checkbox);
+        newLi.innerHTML = toDo.title;
 
-    newLi.appendChild(deleteBtn);
+        checkbox.addEventListener('click', function() {
+          toDo.complete = checkbox.checked ? true : false;
+        });
 
-    toDoList.appendChild(newLi);
+        toDoList.appendChild(newLi);
+        newLi.appendChild(checkbox);
+        newLi.appendChild(deleteBtn);
 
-    newToDoText.value = '';
+        deleteBtn.addEventListener('click', () => {
+          toDos = deleteToDo(toDo.id);
+          renderTheUI();
+        });
+      });
+    }
 
-    deleteBtn.innerHTML = '<span>Delete<span>';
+    addToDoForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        createNewToDo();
+        newToDoText.value = '';
+        renderTheUI();
+      });
 
-    deleteBtn.addEventListener('click', event => {
-
-      newLi.remove();
-
-      deleteBtn.remove();
-      
-      checkbox.remove();
-    });
-  });
+      renderTheUI();
 }
-
 
 window.onload = function() {
   onReady();
