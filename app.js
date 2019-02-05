@@ -1,6 +1,6 @@
 function onReady() {
+   let toDos = [];
    let id = toDos.length || 0;
-   const toDos = [];
    const addToDoForm = document.getElementById('addToDoForm');
    const newToDoText = document.getElementById('newToDoText');
 
@@ -14,7 +14,7 @@ function onReady() {
     }
 
     function deleteToDo(id) {
-      return toDos.filter(toDO => toDo.id !== id);
+      return toDos.filter(toDo => toDo.id !== id);
     }
 
     function renderTheUI() {
